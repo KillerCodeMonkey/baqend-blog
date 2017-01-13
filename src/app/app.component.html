@@ -1,0 +1,12 @@
+<main>
+    <h1>Hello from Angular App with Webpack</h1>
+    <img src="../../public/images/angular.png">
+</main>
+<div class="container">
+    <button class="btn btn-primary">Test</button>
+
+    <div *ngFor="let post of posts">
+        <h3>{{post.title}}</h3>
+        <div [innerHTML]="post.text"></div>
+    </div>
+</div>
