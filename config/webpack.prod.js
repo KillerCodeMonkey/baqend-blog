@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var commonConfig = require('./webpack.common.js');
 var helpers = require('./helpers');
 
+const OLD_ENV = process.env.NODE_ENV;
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = webpackMerge(commonConfig, {
@@ -11,7 +12,7 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('www'),
-    publicPath: '/',
+    publicPath: OLD_ENV == 'gh-pages' ? './' : '/',
     filename: '[name].[hash].js',
     chunkFilename: '[id].[hash].chunk.js'
   },
