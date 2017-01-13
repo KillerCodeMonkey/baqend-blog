@@ -7,8 +7,9 @@
     "baqend": "baqend",
     "start": "webpack-dev-server --inline --progress --port 8080",
     "test": "karma start",
-    "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
-    "gh-pages": "npm run build && gh-pages -d www"
+    "build": "npm run clean && webpack --config config/webpack.prod.js --progress --profile --bail",
+    "gh-pages": "NODE_ENV=gh-pages npm run build && gh-pages -d www && npm run clean",
+    "clean": "rimraf www"
   },
   "repository": {
     "type": "git",
@@ -61,6 +62,7 @@
     "phantomjs-prebuilt": "^2.1.7",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.2",
+    "string-replace-loader": "^1.0.5",
     "style-loader": "^0.13.1",
     "typescript": "~2.0.10",
     "webpack": "^1.13.0",

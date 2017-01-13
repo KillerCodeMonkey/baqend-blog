@@ -25,6 +25,14 @@ module.exports = {
         loader: 'html'
       },
       {
+        test: /index.html$/,
+        loader: 'string-replace-loader',
+        query: {
+            search: 'BASE_URL',
+            replace: process.env.NODE_ENV == 'gh-pages' ? '/baqend-blog/' : '/'
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
         loader: 'file?name=assets/[name].[hash].[ext]'
       },
