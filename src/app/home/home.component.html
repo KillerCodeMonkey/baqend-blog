@@ -1,0 +1,7 @@
+<div class="container">
+    <div *ngFor="let post of posts">
+        <h3>{{post.title}}</h3>
+        <div [innerHTML]="post.text"></div>
+        <button [routerLink]="[post.slug]" class="btn btn-primary">Go to sidekicks</button>
+    </div>
+</div>

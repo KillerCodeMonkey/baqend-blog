@@ -2,24 +2,32 @@ import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { PostService } from './shared/post.service';
+import { HomeComponent } from './home/home.component';
+import { DetailComponent } from './detail/detail.component';
+import { PostService, DB_PROVIDERS, DBService } from './shared';
+
+import { AppRouter } from './app.router';
 
 import { db } from 'baqend';
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+
+        AppRouter
     ],
     providers: [
-        PostService
+        PostService,
+        DB_PROVIDERS
     ],
     declarations: [
-        AppComponent
+        AppComponent,
+
+        HomeComponent,
+        DetailComponent
     ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {
-    constructor() {
-        db.connect('blog', true);
-    }
+    constructor(private dbService: DBService) {}
 }

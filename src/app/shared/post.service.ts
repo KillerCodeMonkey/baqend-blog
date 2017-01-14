@@ -10,12 +10,23 @@ export class PostService {
             .descending("date")
             .limit(30)
             .resultList()
-            .then((posts) => {
+            .then((posts: model.Post[]) => {
                 posts.forEach((post) => {
                     post.text = this.converter.makeHtml(post.text);
                 });
 
                 return posts;
+            });
+    }
+
+    get(slug: String): Promise<model.Post> {
+        return db.Post.find()
+            .equal('slug', slug)
+            .singleResult()
+            .then((post: model.Post) => {
+                post.text = this.converter.makeHtml(post.text);
+
+                return post;
             });
     }
 }
