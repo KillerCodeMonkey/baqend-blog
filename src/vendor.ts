@@ -7,6 +7,3 @@ import '@angular/router';
 
 // RxJS
 import 'rxjs';
-
-// Bootstrap
-import 'bootstrap/dist/css/bootstrap.css';

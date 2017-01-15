@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 var helpers = require('./helpers');
 
 module.exports = {
@@ -24,13 +27,13 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader: 'null'
-      },
-      {
-        test: /\.css$/,
         include: helpers.root('src', 'app'),
         loader: 'raw'
+      },
+      {
+        test: /\.scss$/,
+        include: helpers.root('src', 'app'),
+        loaders: ['raw', 'sass']
       }
     ]
   }
