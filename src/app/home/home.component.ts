@@ -4,8 +4,7 @@ import { db, model } from 'baqend';
 import { PostService } from '../shared';
 
 @Component({
-    templateUrl: './home.component.html',
-    styleUrls: ['home.component.css']
+    templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
     posts: model.Post[];

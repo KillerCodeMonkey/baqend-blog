@@ -5,8 +5,7 @@ import { db, model } from 'baqend';
 import { PostService } from '../shared';
 
 @Component({
-    templateUrl: './detail.component.html',
-    styleUrls: ['detail.component.css']
+    templateUrl: './detail.component.html'
 })
 export class DetailComponent implements OnInit {
     post: model.Post;
