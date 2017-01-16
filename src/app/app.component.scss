@@ -10,9 +10,16 @@ $brand-primary: #009688;
 $padding-base-vertical: 10px;
 $padding-base-horizontal: 15px;
 
+$btn-primary-color: $brand-primary;
+$btn-primary-bg: transparent;
+$btn-primary-border: $brand-primary;
+$btn-border-radius-base: 0;
+
 /* own variables */
 $light: #FFF;
+$dark: #2e2e2e;
 
+$header-height: 50px;
 $footer-height: 235px;
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
@@ -22,18 +29,6 @@ body {
 }
 
 /* typo */
-.text-large {
-    font-size: $font-size-large;
-}
-
-.text-light {
-    font-weight: 300;
-}
-
-.text-bold {
-    font-weight: 700;
-}
-
 .heading-small {
     font-size: 14px;
     font-weight: bold;
@@ -41,17 +36,19 @@ body {
     text-transform: uppercase;
 }
 
-.uppercase {
-    text-transform: uppercase;
+/* general layout */
+.navbar {
+    background-color: $light;
+    border-bottom: 1px solid $gray-lighter;
 }
 
-/* general layout */
 .main-container {
+    padding-top: $header-height;
     min-height: calc(100vh - 250px);
 }
 
 footer {
-    background-color: #2e2e2e;
+    background-color: $dark;
     color: $light;
     margin-top: $padding-base-horizontal;
     padding: $padding-base-horizontal 0;   
@@ -71,6 +68,18 @@ footer {
     align-items: center;
 }
 
+/* buttons */
+.btn {
+    border: 2px solid $btn-primary-color;
+    padding: $padding-base-vertical $padding-base-vertical*3;
+}
+
+.btn.btn-primary:hover {
+    color: $light;
+    background-color: $btn-primary-color;
+    border: 2px solid $btn-primary-color;
+}
+
 /* images */
 .image-circle {
     background-image: url('public/images/avatar.jpg');
@@ -78,8 +87,8 @@ footer {
     background-size: cover; 
     border-radius: 50%;
     margin-right: $padding-base-vertical;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
 }
 
 /* lists */
