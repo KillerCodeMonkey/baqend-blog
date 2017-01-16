@@ -1,7 +1,19 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+
+/* overwrite bootstrap variables */
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+
+$brand-primary: #009688;
+
+$padding-base-vertical: 10px;
+$padding-base-horizontal: 15px;
+
+/* own variables */
+$light: #FFF;
+
+$footer-height: 235px;
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
@@ -9,13 +21,75 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+/* typo */
+.text-large {
+    font-size: $font-size-large;
+}
+
+.text-light {
+    font-weight: 300;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.heading-small {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: $padding-base-horizontal;
+    text-transform: uppercase;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+/* general layout */
+.main-container {
+    min-height: calc(100vh - 250px);
+}
+
 footer {
     background-color: #2e2e2e;
-    bottom: 0;
-    color: #fff;
-    margin-top: 15px;
-    padding: 15px;
-    position: absolute;    
-    width: 100%;
-    height: 220px;
+    color: $light;
+    margin-top: $padding-base-horizontal;
+    padding: $padding-base-horizontal 0;   
+    height: $footer-height;
+}
+
+/* helpers */
+.margin-bottom {
+    margin-bottom: $padding-base-vertical;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+/* images */
+.image-circle {
+    background-image: url('public/images/avatar.jpg');
+    background-position: center;
+    background-size: cover; 
+    border-radius: 50%;
+    margin-right: $padding-base-vertical;
+    width: 100px;
+    height: 100px;
+}
+
+/* lists */
+.category-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+        border-bottom: 1px dashed $light;
+        padding-bottom: $padding-base-vertical/2;
+        margin-bottom:  $padding-base-vertical/2;
+    }
 }
