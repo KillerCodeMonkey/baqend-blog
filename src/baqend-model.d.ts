@@ -5,23 +5,10 @@ declare module "baqend" {
   interface baqend {
     Comment: binding.EntityFactory<model.Comment>;
     Post: binding.EntityFactory<model.Post>;
+    Tag: binding.EntityFactory<model.Tag>;
   }
 
   namespace model {
-    interface Device extends binding.Entity {
-      deviceOs: string;
-    }
-
-    interface Role extends binding.Entity {
-      name: string;
-      users: Set<User>;
-    }
-
-    interface User extends binding.Entity {
-      username: string;
-      inactive: boolean;
-    }
-
     interface Comment extends binding.Entity {
       text: string;
       post: Post;
@@ -31,6 +18,26 @@ declare module "baqend" {
       title: string;
       text: string;
       slug: string;
+      tags: Set<Tag>;
+    }
+
+    interface User extends binding.Entity {
+      username: string;
+      inactive: boolean;
+    }
+
+    interface Device extends binding.Entity {
+      deviceOs: string;
+    }
+
+    interface Tag extends binding.Entity {
+      name: string;
+      alias: string;
+    }
+
+    interface Role extends binding.Entity {
+      name: string;
+      users: Set<User>;
     }
 
   }
