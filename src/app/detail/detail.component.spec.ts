@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 import { async, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -83,7 +83,7 @@ describe('Detail', () => {
         
     }));
 
-    it('should redirect to home on click', fakeAsync(inject([Router], (router: Router) => {
+    it('should redirect to home on click', fakeAsync(inject([Router, Location], (router: Router, location: Location) => {
         let fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();
         tick();
@@ -92,10 +92,12 @@ describe('Detail', () => {
         fixture.detectChanges();
         tick();
 
+        spyOn(location, 'back');
+
         fixture.nativeElement.querySelector('button').click();
         fixture.detectChanges();
         tick();
 
-        expect(router.isActive('', true)).toBeTruthy();
+        expect(location.back).toHaveBeenCalled();
     })));
 });

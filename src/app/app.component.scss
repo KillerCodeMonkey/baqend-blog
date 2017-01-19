@@ -25,14 +25,23 @@ $footer-height: 235px;
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
 body {
+    background-color: $dark;
     font-family: 'Source Sans Pro', sans-serif;
+}
+
+a {
+    cursor: pointer;
+    
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 /* typo */
 .heading-small {
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: $padding-base-horizontal;
+    margin: $padding-base-horizontal 0;
     text-transform: uppercase;
 }
 
@@ -42,17 +51,27 @@ body {
     border-bottom: 1px solid $gray-lighter;
 }
 
+.content-wrapper {
+    background-color: $light;
+}
+
 .main-container {
-    padding-top: $header-height;
-    min-height: calc(100vh - 250px);
+    padding-top: 65px;    
+    padding-bottom: $padding-base-horizontal;
 }
 
 footer {
     background-color: $dark;
     color: $light;
-    margin-top: $padding-base-horizontal;
-    padding: $padding-base-horizontal 0;   
-    height: $footer-height;
+    padding-bottom: $padding-base-horizontal;
+
+    a {
+        color: $light;
+    }
+
+    a:hover {
+        color: $brand-primary
+    }
 }
 
 /* helpers */
