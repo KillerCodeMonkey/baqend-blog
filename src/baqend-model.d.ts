@@ -17,8 +17,10 @@ declare module "baqend" {
     interface Post extends binding.Entity {
       title: string;
       text: string;
-      slug: string;
       tags: Set<Tag>;
+      slug: string;
+      preview_image: undefined;
+      description: string;
     }
 
     interface User extends binding.Entity {
