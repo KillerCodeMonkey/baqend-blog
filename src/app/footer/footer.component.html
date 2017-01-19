@@ -24,15 +24,15 @@
             <div class="col-md-4">
                 <div class="heading-small">Kategorien</div>
                 <ul class="category-list">
-                    <li>Kategorie 1</li>
-                    <li>Kategorie 2</li>
-                    <li>Kategorie 3</li>
-                    <li>Kategorie 4</li>
-                    <li>Kategorie 5</li>
+                    <li *ngFor="let tag of tags">
+                        <a [routerLink]="['kategorie', tag.alias]">
+                            {{tag.name}}
+                        </a>
+                     </li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <div class="heading-small">Was anderes</div>
+                <div class="heading-small" >Was anderes</div>
             </div>
         </div>
         <p class="margin-bottom">© 2017 Maschenmanufaktur</p>

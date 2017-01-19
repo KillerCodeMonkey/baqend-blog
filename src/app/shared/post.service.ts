@@ -5,8 +5,14 @@ import { Converter } from 'showdown';
 export class PostService {
     converter = new Converter();
 
-    getAll(): Promise<model.Post[]> {
-        return db.Post.find()
+    getAll(tag?: string): Promise<model.Post[]> {
+        let req = db.Post.find();
+
+        if (tag) {
+            req.in('tags', tag);
+        }
+
+        return req
             .descending("date")
             .limit(30)
             .resultList()
@@ -19,7 +25,8 @@ export class PostService {
             });
     }
 
-    get(slug: String): Promise<model.Post> {
+    get(slug: string): Promise<model.Post> {
+
         return db.Post.find()
             .equal('slug', slug)
             .singleResult()
@@ -27,6 +34,15 @@ export class PostService {
                 post.text = this.converter.makeHtml(post.text);
 
                 return post;
-            });
+            })
+            // .then((post: model.Post) => {
+            //     return db.Tag.find().singleResult()
+            //         .then((tag: model.Tag) => {
+            //             post.tags = new Set([tag]);
+            //             post.update();
+
+            //             return post;
+            //         });
+            // });
     }
 }

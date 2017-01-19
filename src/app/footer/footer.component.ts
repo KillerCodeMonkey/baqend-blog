@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { model } from 'baqend';
+
+import { TagService } from '../shared';
 
 @Component({
     selector: 'blog-footer',
@@ -6,5 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class FooterComponent implements OnInit {
-    ngOnInit() {}
+    tags: model.Tag[] = [];
+
+    constructor(private tagService: TagService) {}
+
+    ngOnInit() {
+        console.log('test ============ ');
+        this.tagService.getAll()
+            .then((tags: model.Tag[]) => this.tags = tags);
+    }
 }
