@@ -7,15 +7,13 @@ import { TagService } from '../shared';
     selector: 'blog-footer',
     templateUrl: './footer.component.html'
 })
-
 export class FooterComponent implements OnInit {
     tags: model.Tag[] = [];
 
     constructor(private tagService: TagService) {}
 
     ngOnInit() {
-        console.log('test ============ ');
-        this.tagService.getAll()
-            .then((tags: model.Tag[]) => this.tags = tags);
+      this.tagService.getAll()
+          .then((tags: model.Tag[]) => this.tags = tags);
     }
 }
