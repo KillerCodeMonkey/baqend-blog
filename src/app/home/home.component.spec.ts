@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { model } from 'baqend';
+import { model, db } from 'baqend';
 
 import { HomeComponent } from './home.component';
 import { PostService } from '../shared';

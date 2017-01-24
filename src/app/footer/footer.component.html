@@ -7,15 +7,15 @@
                     <div class="image-circle"></div>
                     <div>
                         <div>
-                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            <i class="icon-user-secret"></i>
                             Anja
                         </div>
                         <div>
-                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            <i class="icon-envelope-o"></i>
                             haekelmanufaktur[at]gmail.com
                         </div>
                         <div>
-                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            <i class="icon-instagram"></i>
                             <a href="https://www.instagram.com/haekelmanufaktur/" target="_blank">Auf Instagram folgen</a>
                         </div>
                     </div>
@@ -26,6 +26,7 @@
                 <ul class="category-list">
                     <li *ngFor="let tag of tags">
                         <a [routerLink]="['kategorie', tag.alias]">
+                            <i class="icon-angle-double-right"></i>
                             {{tag.name}}
                         </a>
                      </li>

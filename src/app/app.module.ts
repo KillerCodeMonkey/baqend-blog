@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -21,7 +21,11 @@ import { db } from 'baqend';
     providers: [
         PostService,
         TagService,
-        DB_PROVIDERS
+        DB_PROVIDERS,
+        {
+            provide: LOCALE_ID,
+            useValue: 'de-DE'
+        }
     ],
     declarations: [
         AppComponent,
