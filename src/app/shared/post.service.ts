@@ -34,15 +34,6 @@ export class PostService {
                 post.text = this.converter.makeHtml(post.text);
 
                 return post;
-            })
-            // .then((post: model.Post) => {
-            //     return db.Tag.find().singleResult()
-            //         .then((tag: model.Tag) => {
-            //             post.tags = new Set([tag]);
-            //             post.update();
-
-            //             return post;
-            //         });
-            // });
+            });
     }
 }
