@@ -23,6 +23,7 @@ $header-height: 50px;
 $footer-height: 235px;
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "public/style";
 
 body {
     background-color: $dark;
@@ -47,12 +48,12 @@ a {
 
 /* general layout */
 .navbar {
-    background-color: $light;
+    background-color: $dark;
     border-bottom: 1px solid $gray-lighter;
 }
 
 .content-wrapper {
-    background-color: $light;
+    background-color: #EFEFEF;
 }
 
 .main-container {
@@ -110,6 +111,12 @@ footer {
     height: 110px;
 }
 
+.image-responsive {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
 /* lists */
 .category-list {
     list-style: none;
@@ -120,4 +127,16 @@ footer {
         padding-bottom: $padding-base-vertical/2;
         margin-bottom:  $padding-base-vertical/2;
     }
+
+    [class^="icon-"] {
+        font-size: 16px;
+        margin-right: 3px;
+    }
+}
+
+/* article overview */
+.post-preview {
+    background-color: $light;
+    margin: $padding-base-horizontal 0;
+    padding-bottom: $padding-base-horizontal;
 }
