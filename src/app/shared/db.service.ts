@@ -12,7 +12,6 @@ export class DBReady implements Resolve<baqend> {
 
 export class DBService {
     constructor() {
-        console.log('instance dbservice');
         db.connect('blog', true);
     }
 }
