@@ -25,12 +25,15 @@ export class PostService {
             });
     }
 
-    get(slug: string): Promise<model.Post> {
+    get(slug: string): Promise<model.Post|never> {
 
         return db.Post.find()
             .equal('slug', slug)
             .singleResult()
             .then((post: model.Post) => {
+                if (!post) {
+                    throw new Error('not_found');
+                }
                 post.text = this.converter.makeHtml(post.text);
 
                 return post;

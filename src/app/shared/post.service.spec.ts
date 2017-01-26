@@ -2,7 +2,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 
 import { db, model } from 'baqend';
 
-const defaultPosts = [{
+let defaultPosts = [{
     title: 'Test Blog',
     text: '## Title',
     slug: 'test'
@@ -57,5 +57,15 @@ describe('PostService', () => {
                 expect(post).toEqual(defaultPosts[0]);
                 expect(post.text).toBe('<h2 id="title">Title</h2>');
             });
+    })));
+
+    it('get - should throw error if nothing found', async(inject([PostService], (service: PostService) => {
+        const backupDefaultPosts = defaultPosts;
+
+        defaultPosts = [];
+
+        service.get('test')
+            .then(post => expect(true).toBe(false))
+            .catch(e => expect(e.message).toBe('not_found'));
     })));
 });

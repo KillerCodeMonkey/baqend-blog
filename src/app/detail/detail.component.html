@@ -1,4 +1,7 @@
 <button (click)="back()" class="btn btn-primary">Home</button>
 <div>
+    <span *ngIf="notFound">
+      Der Beitrag wurde leider nicht gefunden :(
+    </span>
     {{ post | json }}
 </div>
