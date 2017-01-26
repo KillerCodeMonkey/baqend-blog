@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.route.params
-            .switchMap((params: Params) =>  this.postService.getAll(params['tag']))
+            .switchMap((params: Params) => this.postService.getAll(params['tag']))
             .subscribe((posts: model.Post[]) => this.posts = posts);
     }
 }
