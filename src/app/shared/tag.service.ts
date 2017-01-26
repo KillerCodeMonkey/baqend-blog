@@ -8,9 +8,6 @@ export class TagService {
                 return db.Tag.find()
                     .ascending("name")
                     .resultList();
-            })
-            .then((tags: model.Tag[]) => {
-                return tags;
             });
     }
 }
