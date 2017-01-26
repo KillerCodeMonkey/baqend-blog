@@ -2,7 +2,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 
 import { db, model } from 'baqend';
 
-const posts = [{
+const defaultPosts = [{
     title: 'Test Blog',
     text: '## Title',
     slug: 'test'
@@ -13,14 +13,14 @@ const operations = {
         return {
             limit: (count: number) => {
                 return {
-                    resultList: () => Promise.resolve(posts)
+                    resultList: () => Promise.resolve(defaultPosts)
                 };
             }
         }
     },
     equal: (field: string, value: any) => {
         return {
-            singleResult: () => Promise.resolve(posts[0])
+            singleResult: () => Promise.resolve(defaultPosts[0])
         };
     }
 }
@@ -44,7 +44,7 @@ describe('PostService', () => {
         service
             .getAll()
             .then(posts => {
-                expect(posts).toEqual(posts);
+                expect(posts).toEqual(defaultPosts);
                 expect(posts[0].text).toBe('<h2 id="title">Title</h2>');
             });
     })));
@@ -54,7 +54,7 @@ describe('PostService', () => {
         service
             .get('test')
             .then(post => {
-                expect(post).toEqual(posts[0]);
+                expect(post).toEqual(defaultPosts[0]);
                 expect(post.text).toBe('<h2 id="title">Title</h2>');
             });
     })));
