@@ -10,10 +10,14 @@ $brand-primary: #009688;
 $padding-base-vertical: 10px;
 $padding-base-horizontal: 15px;
 
+$headings-font-weight: 700;
+
 $btn-primary-color: $brand-primary;
 $btn-primary-bg: transparent;
 $btn-primary-border: $brand-primary;
 $btn-border-radius-base: 0;
+
+$screen-lg: 9999px;
 
 /* own variables */
 $light: #FFF;
@@ -27,7 +31,8 @@ $footer-height: 235px;
 
 body {
     background-color: $dark;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
 
 a {
@@ -39,6 +44,10 @@ a {
 }
 
 /* typo */
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 0;
+}
+
 .heading-small {
     font-size: 14px;
     font-weight: bold;
@@ -46,10 +55,23 @@ a {
     text-transform: uppercase;
 }
 
+.post-date,
+.post-tags  {
+    color: $gray-light;
+    font-weight: 300;
+
+    a {
+        color: $gray-light;
+    }
+
+    a:hover {
+        color: $brand-primary;
+    }
+}
+
 /* general layout */
 .navbar {
     background-color: $dark;
-    border-bottom: 1px solid $gray-lighter;
 }
 
 .content-wrapper {
@@ -88,6 +110,10 @@ footer {
     align-items: center;
 }
 
+.flex-1 {
+    flex: 1;
+}
+
 /* buttons */
 .btn {
     border: 2px solid $btn-primary-color;
@@ -100,17 +126,12 @@ footer {
     border: 2px solid $btn-primary-color;
 }
 
-/* images */
-.image-circle {
-    background-image: url('public/images/avatar.jpg');
-    background-position: center;
-    background-size: cover; 
-    border-radius: 50%;
-    margin-right: $padding-base-vertical;
-    width: 110px;
-    height: 110px;
+/* icons */
+.icon-spacing-right {
+    margin-right: 3px; 
 }
 
+/* images */
 .image-responsive {
     max-width: 100%;
     display: block;
@@ -123,9 +144,12 @@ footer {
     padding: 0;
 
     li {
-        border-bottom: 1px dashed $light;
         padding-bottom: $padding-base-vertical/2;
         margin-bottom:  $padding-base-vertical/2;
+    }
+
+    li:not(:last-child) {
+        border-bottom: 1px dashed $light;
     }
 
     [class^="icon-"] {
@@ -138,5 +162,21 @@ footer {
 .post-preview {
     background-color: $light;
     margin: $padding-base-horizontal 0;
-    padding-bottom: $padding-base-horizontal;
+
+    .post-preview-details {
+        padding: $padding-base-horizontal;
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .post-preview {
+        height: 250px;
+        display: flex;
+        align-items: center;
+    }
+
+    .post-preview-image {
+         height: 250px;
+         width: 250px;
+    }
 }
