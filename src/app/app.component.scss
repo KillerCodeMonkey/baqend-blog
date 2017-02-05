@@ -59,6 +59,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 .post-tags  {
     color: $gray-light;
     font-weight: 300;
+    margin-bottom: $padding-base-vertical/2;
 
     a {
         color: $gray-light;
@@ -178,5 +179,15 @@ footer {
     .post-preview-image {
          height: 250px;
          width: 250px;
+    }
+}
+
+/* single posts */
+.post-breadcrumb {
+    margin-bottom: $padding-base-horizontal;
+
+    .post-breadcrumb-link:hover {
+        color: $brand-primary;
+        cursor: pointer;
     }
 }

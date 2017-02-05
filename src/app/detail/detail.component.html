@@ -1,7 +1,23 @@
-<button (click)="back()" class="btn btn-primary">Home</button>
-<div>
-    <span *ngIf="notFound">
-      Der Beitrag wurde leider nicht gefunden :(
-    </span>
-    {{ post | json }}
-</div>
+<article *ngIf="post">
+  <div class="post-breadcrumb display-flex align-items-center">
+      <div class="post-breadcrumb-link" (click)="back()">Startseite</div>
+      <i class="icon-angle-double-right"></i>
+      {{post.title}}
+  </div>
+  
+ <div class="display-flex">
+      <div class="post-date">{{post.createdAt | date:'d. MMMM y'}}</div>
+      <div class="post-tags flex-1 text-right">
+          <i class="icon-spacing-right icon-tags"></i>
+          <a *ngFor="let tag of post.tags" [routerLink]="['/kategorie', tag.alias]">{{tag.name}}</a>
+      </div>
+  </div>
+  <h3>{{post.title}}</h3>
+
+  <div>
+      {{ post | json }}
+  </div>
+</article>
+<p *ngIf="notFound" class="text-center">
+        Der Beitrag konnte leider nicht gefunden werden :(
+</p>

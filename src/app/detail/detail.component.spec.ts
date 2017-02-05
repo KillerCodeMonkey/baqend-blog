@@ -94,7 +94,10 @@ describe('Detail', () => {
 
         spyOn(location, 'back');
 
-        fixture.nativeElement.querySelector('button').click();
+        fixture.detectChanges();
+        tick();
+
+        fixture.nativeElement.querySelector('.post-breadcrumb-link').click();
         fixture.detectChanges();
         tick();
 

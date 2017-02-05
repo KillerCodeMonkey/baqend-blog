@@ -4,10 +4,10 @@
     </div>
     <div class="post-preview-details flex-1">
         <div class="display-flex">
-            <div class="post-date"><i class="icon-spacing-right icon-calendar-o"></i>{{post.createdAt | date:'d. MMMM y'}}</div>
+            <div class="post-date">{{post.createdAt | date:'d. MMMM y'}}</div>
             <div class="post-tags flex-1 text-right">
                 <i class="icon-spacing-right icon-tags"></i>
-                <a *ngFor="let tag of post.tags" [routerLink]="['kategorie', tag.alias]">{{tag.name}}</a>
+                <a *ngFor="let tag of post.tags" [routerLink]="['/kategorie', tag.alias]">{{tag.name}}</a>
             </div>
         </div>
         <h3>{{post.title}}</h3>
