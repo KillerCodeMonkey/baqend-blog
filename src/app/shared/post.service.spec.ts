@@ -2,11 +2,23 @@ import { async, inject, TestBed } from '@angular/core/testing';
 
 import { db, model } from 'baqend';
 
+import { TagService } from './tag.service';
+
 let defaultPosts = [{
     title: 'Test Blog',
     text: '## Title',
     slug: 'test'
 }] as model.Post[];
+
+class TagStub {
+    getByAlias(): Promise<model.Tag> {
+        return Promise.resolve({
+            id: '1',
+            alias: 'cat1',
+            name: 'Kategorie 1'
+        });
+    }
+}
 
 const operations = {
     descending: (field: string) => {
@@ -22,6 +34,19 @@ const operations = {
         return {
             singleResult: () => Promise.resolve(defaultPosts[0])
         };
+    },
+    in: (field: string, value: any) => {
+        return {
+            descending: (field: string) => {
+                return {
+                    limit: (count: number) => {
+                        return {
+                            resultList: () => Promise.resolve(defaultPosts)
+                        };
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -31,7 +56,11 @@ describe('PostService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                PostService
+                PostService,
+                {
+                    provide: TagService,
+                    useClass: TagStub
+                }
             ]
         });
         db.Post = {
@@ -49,7 +78,17 @@ describe('PostService', () => {
             });
     })));
 
-    it('get - should get a single post', async(inject([PostService], (service: PostService) => {
+    it('getAll - should get all posts with special tag', async(inject([PostService], (service: PostService) => {
+
+        service
+            .getAll('test')
+            .then(posts => {
+                expect(posts).toEqual(defaultPosts);
+                expect(posts[0].text).toBe('<h2 id="title">Title</h2>');
+            });
+    })));
+
+    it('get - should get a single post without tag', async(inject([PostService], (service: PostService) => {
 
         service
             .get('test')

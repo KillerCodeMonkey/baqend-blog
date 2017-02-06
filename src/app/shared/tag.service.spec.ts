@@ -38,6 +38,32 @@ describe('TagService', () => {
             .getAll()
             .then(tags => {
                 expect(tags).toEqual(defaultTags);
+
+                // second request should use cached tags
+                spyOn(db.Tag, 'find');
+                return service.getAll();
+            })
+            .then((tags) => {
+                expect(tags).toEqual(defaultTags);
+                expect(db.Tag.find).not.toHaveBeenCalled();
+            });
+    })));
+
+    it('getByName - should get tag by name', async(inject([TagService], (service: TagService) => {
+        spyOn(db, 'ready').and.returnValue(Promise.resolve());
+
+        service
+            .getByAlias('cat1')
+            .then(tag => {
+                expect(tag).toEqual(defaultTags[0]);
+
+                // second request should use cached tags
+                spyOn(db.Tag, 'find');
+                return service.getByAlias('cat1');
+            })
+            .then((tag) => {
+                expect(tag).toEqual(defaultTags[0]);
+                expect(db.Tag.find).not.toHaveBeenCalled();
             });
     })));
 });
