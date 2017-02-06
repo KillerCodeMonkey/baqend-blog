@@ -9,10 +9,10 @@ import { PostService } from '../shared';
 })
 
 export class HomeComponent implements OnInit {
-    posts: model.Post[];
+    posts: model.Post[] = [];
 
     constructor(
-        private postService: PostService, 
+        private postService: PostService,
         private route: ActivatedRoute
     ) {}
 
