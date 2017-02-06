@@ -1,23 +1,17 @@
-<article *ngIf="post">
-  <div class="post-breadcrumb display-flex align-items-center">
-      <div class="post-breadcrumb-link" (click)="back()">Startseite</div>
-      <i class="icon-angle-double-right"></i>
-      {{post.title}}
-  </div>
-  
- <div class="display-flex">
-      <div class="post-date">{{post.createdAt | date:'d. MMMM y'}}</div>
-      <div class="post-tags flex-1 text-right">
+<article class="post" *ngIf="post">
+  <h3>{{post.title}}</h3>
+  <div class="display-flex align-items-center">
+      <div class="post-date">{{post.createdAt | date:'d. MMMM y'}} | </div>
+      <div class="post-tags">
           <i class="icon-spacing-right icon-tags"></i>
           <a *ngFor="let tag of post.tags" [routerLink]="['/kategorie', tag.alias]">{{tag.name}}</a>
       </div>
   </div>
-  <h3>{{post.title}}</h3>
+  <br>
 
-  <div>
-      {{ post | json }}
-  </div>
+  <div class="post-text" [innerHTML]="sanitize(post.text)"></div>
+
+  <p *ngIf="notFound" class="text-center">Der Beitrag konnte leider nicht gefunden werden :(</p>
 </article>
-<p *ngIf="notFound" class="text-center">
-        Der Beitrag konnte leider nicht gefunden werden :(
-</p>
+
+<button class="btn btn-primary" (click)="back()">Zurück zur Übersicht</button>

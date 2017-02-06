@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 import { db, model } from 'baqend';
 
 import { PostService } from '../shared';
@@ -16,7 +17,8 @@ export class DetailComponent implements OnInit {
     constructor(
         private postService: PostService,
         private route: ActivatedRoute,
-        private location: Location
+        private location: Location,
+        private sanitizer: DomSanitizer
     ) {}
 
     ngOnInit() {
@@ -26,6 +28,10 @@ export class DetailComponent implements OnInit {
                 this.notFound = false;
                 this.post = post
             }, () => this.notFound = true);
+    }
+
+    sanitize(text: string) {
+        return this.sanitizer.bypassSecurityTrustHtml(text);
     }
 
     back() {

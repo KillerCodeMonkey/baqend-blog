@@ -97,7 +97,7 @@ describe('Detail', () => {
         fixture.detectChanges();
         tick();
 
-        fixture.nativeElement.querySelector('.post-breadcrumb-link').click();
+        fixture.nativeElement.querySelector('button').click();
         fixture.detectChanges();
         tick();
 
