@@ -1,4 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { NavigationComponent } from './navigation.component';
 
@@ -7,6 +8,9 @@ describe('Navigation', () => {
         TestBed.configureTestingModule({
             declarations: [
                 NavigationComponent
+            ],
+            providers:[
+                RouterTestingModule
             ]
         });
     });
@@ -18,7 +22,7 @@ describe('Navigation', () => {
 
     it('should render content', async(() => {
         let fixture = TestBed.createComponent(NavigationComponent);
-        
+
         // ngOnInit
         fixture.detectChanges();
 
