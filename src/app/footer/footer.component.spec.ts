@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule, Location, NgFor } from '@angular/common';
+import { By } from '@angular/platform-browser';
 
 import { async, inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -9,7 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { model } from 'baqend';
 
 import { FooterComponent } from './footer.component';
-import { TagService } from '../shared';
+import { InstagramService, InstgramPost, TagService } from '../shared';
 
 const tags = [{
     id: '123',
@@ -22,6 +23,57 @@ class TagServiceStub {
         return Promise.resolve(tags);
     }
 }
+
+const defaultPosts = [{
+    tags: ['test'],
+    images: {
+        thumbnail: {
+            width: 150,
+            height: 150,
+            url: 'https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/16464042_1848377825436846_7593857214209589248_n.jpg?ig_cache_key=MTQ0Mjc4MTQyMTc4NTkxMjk5MA%3D%3D.2'
+        },
+        low_resolution: {
+            width: 150,
+            height: 150,
+            url: 'https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/16464042_1848377825436846_7593857214209589248_n.jpg?ig_cache_key=MTQ0Mjc4MTQyMTc4NTkxMjk5MA%3D%3D.2'
+        },
+        standard_resolution: {
+            width: 150,
+            height: 150,
+            url: 'https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/16464042_1848377825436846_7593857214209589248_n.jpg?ig_cache_key=MTQ0Mjc4MTQyMTc4NTkxMjk5MA%3D%3D.2'
+        }
+    },
+    type: 'image',
+    id: 'test',
+    user: {
+        username: 'test',
+        id: 'test',
+        profile_picture: 'https://scontent.cdninstagram.com/t51.2885-19/s150x150/14727565_1850907555190861_5309271844979736576_a.jpg'
+    },
+    link: 'https://www.instagram.com/p/BQFyg8WFRae/',
+    created_time: Date.now().toString(),
+    caption: {
+        text: 'test',
+        created_time: Date.now().toString(),
+        from: {
+            username: 'test',
+            id: 'test',
+            profile_picture: 'https://scontent.cdninstagram.com/t51.2885-19/s150x150/14727565_1850907555190861_5309271844979736576_a.jpg'
+        }
+    },
+    likes: {
+        count: 500000
+    }
+}] as InstgramPost[];
+
+class InstagramServiceStub {
+    getRecent(user?: string): Promise<InstgramPost[]> {
+        return Promise.resolve(defaultPosts);
+    }
+}
+
+const instagramQuery = 'ul.instagram-list > li';
+const tagQuery = 'ul.category-list > li';
 
 @Component({
     template: ''
@@ -38,6 +90,9 @@ describe('Footer', () => {
             providers: [{
                 provide: TagService,
                 useClass: TagServiceStub
+            }, {
+                provide: InstagramService,
+                useClass: InstagramServiceStub
             }],
             imports: [
                 CommonModule,
@@ -64,10 +119,16 @@ describe('Footer', () => {
 
         fixture.whenStable().then(() => {
             expect(fixture.componentInstance.tags).toBe(tags);
+            expect(fixture.componentInstance.instagramPosts).toBe(defaultPosts);
             fixture.detectChanges();
 
-            expect(fixture.nativeElement.querySelectorAll('li').length).toBe(1);
-            expect(fixture.nativeElement.querySelector('li > a').href).toMatch('/kategorie/' + tags[0].alias);
+            const tagsElements = fixture.nativeElement.querySelectorAll(tagQuery);
+            expect(tagsElements.length).toBe(1);
+            expect(tagsElements[0].querySelector('a').href).toMatch('/kategorie/' + tags[0].alias);
+
+            const instagramElements = fixture.nativeElement.querySelectorAll(instagramQuery);
+            expect(instagramElements.length).toBe(1);
+            expect(instagramElements[0].querySelector('a').href).toMatch('instagram.com/p/BQFyg8WFRae');
         });
     })));
 });

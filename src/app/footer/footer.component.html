@@ -29,6 +29,17 @@
             </div>
             <div class="col-md-4">
                 <div class="heading-small" >Was anderes</div>
+                <ul class="instagram-list">
+                    <li *ngFor="let instagramPost of instagramPosts">
+                        <a href="{{instagramPost.link}}" target="_blank">
+                            <img
+                                src="{{instagramPost.images.low_resolution.url}}"
+                                width="{{instagramPost.images.low_resolution.width}}"
+                                height="{{instagramPost.images.low_resolution.height}}"
+                            >
+                        </a>
+                     </li>
+                </ul>
             </div>
         </div>
         <p class="margin-bottom">© 2017 Maschenmanufaktur</p>
