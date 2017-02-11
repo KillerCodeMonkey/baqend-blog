@@ -95,9 +95,19 @@ footer {
     a:hover {
         color: $brand-primary
     }
+
+    hr {
+        border-top: 1px solid $gray;
+        margin-bottom: 10px;
+    }
 }
 
 /* helpers */
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+
 .margin-bottom {
     margin-bottom: $padding-base-vertical;
 }
@@ -137,6 +147,10 @@ footer {
     max-width: 100%;
     display: block;
     height: auto;
+}
+
+.instgram-box {
+    margin: 0;
 }
 
 /* lists */

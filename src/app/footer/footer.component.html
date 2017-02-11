@@ -1,7 +1,17 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+             <div class="col-sm-4">
+                <div class="heading-small" >Aktuell auf Intagram</div>
+                <div class="instgram-box row no-gutter">
+                    <div class="col-xs-4" *ngFor="let instagramPost of instagramPosts.slice(0, 9)">
+                        <a href="{{instagramPost.link}}" target="_blank">
+                            <img class="image-responsive" src="{{instagramPost.images.low_resolution.url}}">
+                        </a>
+                     </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
                 <div class="heading-small">Kontakt</div>
                 <div>
                     <i class="icon-spacing-right icon-user-secret"></i>
@@ -16,7 +26,7 @@
                     <a href="https://www.instagram.com/haekelmanufaktur/" target="_blank">Auf Instagram folgen</a>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <div class="heading-small">Kategorien</div>
                 <ul class="category-list">
                     <li *ngFor="let tag of tags">
@@ -27,21 +37,8 @@
                      </li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <div class="heading-small" >Was anderes</div>
-                <ul class="instagram-list">
-                    <li *ngFor="let instagramPost of instagramPosts">
-                        <a href="{{instagramPost.link}}" target="_blank">
-                            <img
-                                src="{{instagramPost.images.low_resolution.url}}"
-                                width="{{instagramPost.images.low_resolution.width}}"
-                                height="{{instagramPost.images.low_resolution.height}}"
-                            >
-                        </a>
-                     </li>
-                </ul>
-            </div>
         </div>
+        <hr>
         <p class="margin-bottom">© 2017 Maschenmanufaktur</p>
     </div>
 </footer>

@@ -72,7 +72,7 @@ class InstagramServiceStub {
     }
 }
 
-const instagramQuery = 'ul.instagram-list > li';
+const instagramQuery = '.instgram-box';
 const tagQuery = 'ul.category-list > li';
 
 @Component({
