@@ -107,9 +107,4 @@ describe('InstagramService', () => {
             });
         })));
     });
-    describe('getRecent', () => {
-        it('should create correct url', async(inject([InstagramService], (service: InstagramService) => {
-            expect(service.buildURL('test'))
-        })));
-    });
 });
