@@ -11,7 +11,13 @@
 
   <div class="post-text" [innerHTML]="sanitize(post.text)"></div>
 
-  <p *ngIf="notFound" class="text-center">Der Beitrag konnte leider nicht gefunden werden :(</p>
+  <div *ngFor="let comment of post.comments">
+    <pre>{{comment | json}}</pre>
+    <br>
+  </div>
 </article>
 
+<p *ngIf="notFound" class="text-center">Der Beitrag konnte leider nicht gefunden werden :(</p>
+
+<button class="btn btn-secondary" (click)="createComment()">Kommentar anlegen</button>
 <button class="btn btn-primary" (click)="back()">Zurück zur Übersicht</button>

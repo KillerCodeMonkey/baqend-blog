@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { db, model } from 'baqend';
 
-import { PostService } from '../shared';
+import { CommentService, PostService } from '../shared';
 
 @Component({
     templateUrl: './detail.component.html'
@@ -15,6 +15,7 @@ export class DetailComponent implements OnInit {
     notFound: boolean = false;
 
     constructor(
+        private commentService: CommentService,
         private postService: PostService,
         private route: ActivatedRoute,
         private location: Location,
@@ -26,12 +27,22 @@ export class DetailComponent implements OnInit {
             .switchMap((params: Params) => this.postService.get(params['slug']))
             .subscribe((post: model.Post) => {
                 this.notFound = false;
-                this.post = post
+                this.post = post;
             }, () => this.notFound = true);
     }
 
     sanitize(text: string) {
         return this.sanitizer.bypassSecurityTrustHtml(text);
+    }
+
+    createComment() {
+        this.commentService.create({
+            text: 'testCommentar Supergääää',
+            email: 'top@tes.locale',
+            name: 'Gerd van Sittich'
+        }).then(comment => {
+            this.postService.addComment(this.post, comment);
+        });
     }
 
     back() {

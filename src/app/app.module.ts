@@ -7,7 +7,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { DetailComponent } from './detail/detail.component';
-import { PostService, TagService, DB_PROVIDERS, DBService, InstagramService } from './shared';
+import { CommentService, PostService, TagService, DB_PROVIDERS, DBService, InstagramService } from './shared';
 
 import { AppRouter } from './app.router';
 
@@ -21,6 +21,7 @@ import { db } from 'baqend';
         AppRouter
     ],
     providers: [
+        CommentService,
         InstagramService,
         PostService,
         TagService,

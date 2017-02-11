@@ -7,18 +7,36 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 
-import { model } from 'baqend';
+import { db, model } from 'baqend';
 
 import { DetailComponent } from './detail.component';
-import { PostService } from '../shared';
+import { CommentService, CommentData, PostService } from '../shared';
+
+let post = {
+    title: 'Test',
+    text: 'Test',
+    slug: 'test',
+    comments: new Set<model.Comment>()
+} as model.Post;
+let comment = {
+    name: 'Test',
+    text: 'Test',
+    email: 'test@test.local'
+} as model.Comment;
 
 class PostServiceStub {
     get(slug: string): Promise<model.Post> {
-        return Promise.resolve({
-            title: 'Test',
-            text: 'Test',
-            slug: 'test'
-        });
+        return Promise.resolve(post);
+    }
+    addComment(post: model.Post, comment: model.Comment) {
+        post.comments.add(comment);
+        return Promise.resolve(post);
+    }
+}
+
+class CommentServiceStub {
+    create(comment: CommentData): Promise<model.Comment> {
+        return Promise.resolve(comment);
     }
 }
 
@@ -27,12 +45,12 @@ class PostServiceStub {
 <router-outlet></router-outlet>
 `
 })
-class TestComponent {} 
+class TestComponent {}
 
 @Component({
     template: ''
 })
-class DummyComponent {} 
+class DummyComponent {}
 
 describe('Detail', () => {
 
@@ -44,11 +62,14 @@ describe('Detail', () => {
                 DummyComponent
             ],
             providers: [{
+                provide: CommentService,
+                useClass: CommentServiceStub
+            }, {
                 provide: PostService,
                 useClass: PostServiceStub
             }, {
                 provide: ActivatedRoute,
-                useValue: { params: Observable.of({'slug': 'test'}) } 
+                useValue: { params: Observable.of({'slug': 'test'}) }
             }],
             imports: [
                 CommonModule,
@@ -74,13 +95,9 @@ describe('Detail', () => {
 
         fixture.whenStable().then(() => {
             expect(fixture.componentInstance.post).toBeDefined();
-            expect(fixture.componentInstance.post).toEqual({
-                title: 'Test',
-                text: 'Test',
-                slug: 'test'
-            });
+            expect(fixture.componentInstance.post).toEqual(post);
         })
-        
+
     }));
 
     it('should redirect to home on click', fakeAsync(inject([Router, Location], (router: Router, location: Location) => {
@@ -97,10 +114,23 @@ describe('Detail', () => {
         fixture.detectChanges();
         tick();
 
-        fixture.nativeElement.querySelector('button').click();
+        fixture.nativeElement.querySelector('button.btn-primary').click();
         fixture.detectChanges();
         tick();
 
         expect(location.back).toHaveBeenCalled();
     })));
+
+    it('createComment should create and add comment', fakeAsync(() => {
+        let fixture = TestBed.createComponent(DetailComponent);
+        fixture.componentInstance.post = post;
+
+        expect(fixture.componentInstance.post.comments.size).toBe(0);
+
+        fixture.componentInstance.createComment();
+        fixture.detectChanges();
+        tick();
+
+        expect(fixture.componentInstance.post.comments.size).toBe(1);
+    }));
 });
