@@ -15,9 +15,42 @@
     <pre>{{comment | json}}</pre>
     <br>
   </div>
+  <div class="jumbotron">
+    <div class="alert alert-success" *ngIf="commentSaved">Dein Kommentar wurde erfolgreich gespeichert.</div>
+    <form [formGroup]="form" (ngSubmit)="form.controls.answer.value == captcha.solution && createComment(form.value)">
+      <input type="text" hidden="{{true}}" formControlName="website">
+      <div class="form-group" [ngClass]="{'has-error':!form.controls.name.valid && form.controls.name.touched}">
+        <label>Name:</label>
+        <input class="form-control" type="text" formControlName="name">
+        <div *ngIf="!form.controls.name.valid && form.controls.name.touched" class="alert alert-danger">
+          Ein gültiger Name besteht aus mindestens 2 Zeichen.
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error':!form.controls.email.valid && form.controls.email.touched}">
+        <label>E-Mail:</label>
+        <input class="form-control" type="email" formControlName="email">
+        <div *ngIf="!form.controls.email.valid && form.controls.email.touched" class="alert alert-danger">
+          Bitte gib eine gültige E-Mail Adresse ein.
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error':!form.controls.text.valid && form.controls.text.touched}">
+        <label>Kommentar:</label>
+        <textarea class="form-control" formControlName="text"></textarea>
+        <div *ngIf="!form.controls.text.valid && form.controls.text.touched" class="alert alert-danger">
+          Ein Kommentar muss mindestens 10 Zeichen beinhalten.
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error': (!form.controls.answer.valid || form.controls.answer.value != captcha.solution) && form.controls.answer.touched}">
+        <label>Sicherheitsfrage: {{captcha.task}}</label>
+        <input type="text" class="form-control" formControlName="answer" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-secondary" [disabled]="!form.valid">Anlegen</button>
+      </div>
+    </form>
+  </div>
 </article>
 
 <p *ngIf="notFound" class="text-center">Der Beitrag konnte leider nicht gefunden werden :(</p>
 
-<button class="btn btn-secondary" (click)="createComment()">Kommentar anlegen</button>
 <button class="btn btn-primary" (click)="back()">Zurück zur Übersicht</button>

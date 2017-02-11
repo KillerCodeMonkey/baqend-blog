@@ -1,5 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { JsonpModule } from '@angular/http';
+import { ReactiveFormsModule, NgModel } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { db } from 'baqend';
     imports: [
         BrowserModule,
         JsonpModule,
+        ReactiveFormsModule,
 
         AppRouter
     ],
@@ -36,7 +38,8 @@ import { db } from 'baqend';
         NavigationComponent,
         FooterComponent,
         HomeComponent,
-        DetailComponent
+        DetailComponent,
+        NgModel
     ],
     bootstrap: [ AppComponent ]
 })

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { async, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -73,6 +74,7 @@ describe('Detail', () => {
             }],
             imports: [
                 CommonModule,
+                ReactiveFormsModule,
                 RouterTestingModule.withRoutes([{
                     path: '',
                     component: DummyComponent
@@ -127,10 +129,28 @@ describe('Detail', () => {
 
         expect(fixture.componentInstance.post.comments.size).toBe(0);
 
-        fixture.componentInstance.createComment();
+        fixture.componentInstance.createComment(comment as CommentData);
         fixture.detectChanges();
         tick();
 
         expect(fixture.componentInstance.post.comments.size).toBe(1);
+    }));
+
+    it('createComment should reset captcha', fakeAsync(() => {
+        let fixture = TestBed.createComponent(DetailComponent);
+        fixture.componentInstance.post = post;
+        fixture.componentInstance.captcha = {
+            task: '123',
+            solution: 12
+        };
+
+        fixture.componentInstance.createComment(comment as CommentData);
+        fixture.detectChanges();
+        tick();
+
+        expect(fixture.componentInstance.captcha).not.toEqual({
+            task: '123',
+            solution: 12
+        });
     }));
 });
