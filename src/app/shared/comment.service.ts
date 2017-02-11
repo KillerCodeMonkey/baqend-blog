@@ -10,17 +10,9 @@ export interface CommentData {
 export class CommentService {
     comments: model.Comment[];
 
-    getAll(): Promise<model.Comment[]> {
-        return db.Comment
-            .find()
-            .descending('date')
-            .resultList()
-            .then(comments => this.comments = comments);
-    }
-
     create(commentData: CommentData): Promise<model.Comment> {
         const comment = new db.Comment(commentData);
 
-        return comment.save();
+        return comment.save({refresh: true});
     }
 }

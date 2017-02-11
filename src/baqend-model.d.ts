@@ -30,7 +30,6 @@ declare module "baqend" {
 
     interface Comment extends binding.Entity {
       text: string;
-      post: Post;
       name: string;
       email: string;
     }
@@ -42,6 +41,7 @@ declare module "baqend" {
       slug: string;
       preview_image: undefined;
       description: string;
+      comments: Set<Comment>;
     }
 
   }

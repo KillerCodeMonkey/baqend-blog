@@ -47,26 +47,6 @@ describe('CommentService', () => {
         db.Comment = CommentStub as any;
     });
 
-    describe('getAll', () => {
-        it('should return all comments', async(inject([CommentService], (service: CommentService) => {
-            service
-                .getAll()
-                .then(comments => {
-                    expect(comments).toEqual(defaultComments);
-                });
-        })));
-
-        it('should return store comments', async(inject([CommentService], (service: CommentService) => {
-            expect(service.comments).toBeUndefined();
-
-            service
-                .getAll()
-                .then(comments => {
-                    expect(service.comments).toEqual(defaultComments);
-                });
-        })));
-    });
-
     describe('create', () => {
         it('should create new comment', async(inject([CommentService], (service: CommentService) => {
             const newComment = {

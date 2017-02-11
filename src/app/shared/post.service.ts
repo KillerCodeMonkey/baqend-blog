@@ -32,10 +32,14 @@ export class PostService {
     get(slug: string): Promise<model.Post> {
         return db.Post.find()
             .equal('slug', slug)
-            .singleResult()
+            .singleResult({depth: 1})
             .then((post: model.Post) => {
                 if (!post) {
                     throw new Error('not_found');
+                }
+
+                if (!post.comments) {
+                    post.comments = new Set<model.Comment>([]);
                 }
 
                 post.text = this.converter.makeHtml(post.text);
@@ -44,13 +48,23 @@ export class PostService {
             });
     }
 
+    addComment(post: model.Post, comment: model.Comment): Promise<model.Post> {
+        post.comments.add(comment);
+
+        return post.save({refresh: true});
+    }
+
     private requestPosts(req: query.Filter<model.Post>): Promise<model.Post[]> {
         return req.descending('date')
             .limit(30)
-            .resultList()
+            .resultList({depth: 1})
             .then((posts: model.Post[]) => {
                 posts.forEach((post) => {
                     post.text = this.converter.makeHtml(post.text);
+
+                    if (!post.comments) {
+                        post.comments = new Set<model.Comment>([]);
+                    }
                 });
 
                 return posts;
