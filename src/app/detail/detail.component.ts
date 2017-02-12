@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { db, model } from 'baqend';
+import { MetadataService } from '@nglibs/metadata';
 
 import { CommentData, CommentService, PostService } from '../shared';
 
@@ -29,7 +30,8 @@ export class DetailComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location,
         private sanitizer: DomSanitizer,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private readonly metadata: MetadataService
     ) {
         this.form = this.fb.group({
             text: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
@@ -67,6 +69,14 @@ export class DetailComponent implements OnInit {
             .subscribe((post: model.Post) => {
                 this.notFound = false;
                 this.post = post;
+
+                this.metadata.setTitle(`${this.post.title}`);
+                this.metadata.setTag('og:description', this.post.description);
+                if (this.post.preview_image) {
+                    this.metadata.setTag('og:image', this.post.preview_image['url']);
+                } else {
+                    this.metadata.setTag('og:image', null);
+                }
             }, () => this.notFound = true);
     }
 
@@ -85,6 +95,7 @@ export class DetailComponent implements OnInit {
     }
 
     back() {
+        console.log('baaaaack');
         this.location.back();
     }
 }

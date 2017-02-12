@@ -9,6 +9,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { db, model } from 'baqend';
+import { MetadataService, MetadataModule } from '@nglibs/metadata';
 
 import { DetailComponent } from './detail.component';
 import { CommentService, CommentData, PostService } from '../shared';
@@ -16,7 +17,11 @@ import { CommentService, CommentData, PostService } from '../shared';
 let post = {
     title: 'Test',
     text: 'Test',
+    description: '1233',
     slug: 'test',
+    preview_image: {
+        url: '123'
+    },
     comments: new Set<model.Comment>()
 } as model.Post;
 let comment = {
@@ -75,13 +80,8 @@ describe('Detail', () => {
             imports: [
                 CommonModule,
                 ReactiveFormsModule,
-                RouterTestingModule.withRoutes([{
-                    path: '',
-                    component: DummyComponent
-                }, {
-                    path: ':slug',
-                    component: DetailComponent
-                }])
+                RouterTestingModule,
+                MetadataModule.forRoot()
             ]
         });
     });
@@ -102,19 +102,30 @@ describe('Detail', () => {
 
     }));
 
+    it('should set correct meta tags', async(inject([MetadataService], (metadata: MetadataService) => {
+        spyOn(metadata, 'setTitle');
+        spyOn(metadata, 'setTag');
+
+        let fixture = TestBed.createComponent(DetailComponent);
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(fixture.componentInstance.post).toBeDefined();
+            expect(fixture.componentInstance.post).toEqual(post);
+
+            expect(metadata.setTitle).toHaveBeenCalledWith(post.title);
+            expect(metadata.setTag).toHaveBeenCalledWith('og:description', post.description);
+            expect(metadata.setTag).toHaveBeenCalledWith('og:image', post.preview_image['url']);
+        });
+    })));
+
     it('should redirect to home on click', fakeAsync(inject([Router, Location], (router: Router, location: Location) => {
-        let fixture = TestBed.createComponent(TestComponent);
-        fixture.detectChanges();
-        tick();
-
-        router.navigate(['test']);
-        fixture.detectChanges();
-        tick();
-
         spyOn(location, 'back');
 
+        let fixture = TestBed.createComponent(DetailComponent);
         fixture.detectChanges();
         tick();
+
 
         fixture.nativeElement.querySelector('button.btn-primary').click();
         fixture.detectChanges();
