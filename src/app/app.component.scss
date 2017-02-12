@@ -49,7 +49,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 .heading-small {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     margin: $padding-base-horizontal 0;
     text-transform: uppercase;
 }
@@ -212,5 +212,14 @@ footer {
         strong {
             font-weight: 400;
         }
+    }
+}
+
+// comments
+.user-comment {
+    margin: $padding-base-vertical * 2 0;
+
+    .user-comment-title {
+        margin-bottom: $padding-base-vertical/2;
     }
 }
