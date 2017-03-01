@@ -11,12 +11,12 @@ import { DetailComponent } from './detail/detail.component';
 import { CommentService, PostService, TagService, DB_PROVIDERS, DBService, InstagramService } from './shared';
 
 import { AppRouter } from './app.router';
-import { MetadataModule, MetadataLoader, MetadataStaticLoader, PageTitlePositioning } from '@nglibs/metadata';
+import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@nglibs/meta';
 
 import { db } from 'baqend';
 
 function metadataFactory() {
-  return new MetadataStaticLoader({
+  return new MetaStaticLoader({
     pageTitlePositioning: PageTitlePositioning.PrependPageTitle,
     pageTitleSeparator: ' - ',
     applicationName: 'Blog | Maschenmanufaktur',
@@ -36,8 +36,8 @@ function metadataFactory() {
         ReactiveFormsModule,
 
         AppRouter,
-        MetadataModule.forRoot({
-            provide: MetadataLoader,
+        MetaModule.forRoot({
+            provide: MetaLoader,
             useFactory: (metadataFactory)
         })
     ],

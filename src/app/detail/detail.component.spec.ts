@@ -9,9 +9,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { db, model } from 'baqend';
-import { MetadataService, MetadataModule } from '@nglibs/metadata';
+import { MetaService, MetaModule } from '@nglibs/meta';
 
-import { DetailComponent } from './detail.component';
+import { DetailComponent, PreviewImage } from './detail.component';
 import { CommentService, CommentData, PostService } from '../shared';
 
 let post = {
@@ -81,7 +81,7 @@ describe('Detail', () => {
                 CommonModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
-                MetadataModule.forRoot()
+                MetaModule.forRoot()
             ]
         });
     });
@@ -102,7 +102,7 @@ describe('Detail', () => {
 
     }));
 
-    it('should set correct meta tags', async(inject([MetadataService], (metadata: MetadataService) => {
+    it('should set correct meta tags', async(inject([MetaService], (metadata: MetaService) => {
         spyOn(metadata, 'setTitle');
         spyOn(metadata, 'setTag');
 
@@ -115,7 +115,9 @@ describe('Detail', () => {
 
             expect(metadata.setTitle).toHaveBeenCalledWith(post.title);
             expect(metadata.setTag).toHaveBeenCalledWith('og:description', post.description);
-            expect(metadata.setTag).toHaveBeenCalledWith('og:image', post.preview_image['url']);
+
+            const image = post.preview_image as PreviewImage;
+            expect(metadata.setTag).toHaveBeenCalledWith('og:image', image.url);
         });
     })));
 
@@ -126,8 +128,11 @@ describe('Detail', () => {
         fixture.detectChanges();
         tick();
 
+        fixture.detectChanges();
+        tick();
 
         fixture.nativeElement.querySelector('button.btn-primary').click();
+
         fixture.detectChanges();
         tick();
 

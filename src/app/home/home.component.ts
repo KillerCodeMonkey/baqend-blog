@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Params } from '@angular/router';
 import { db, model } from 'baqend';
-import { MetadataService } from '@nglibs/metadata';
+import { MetaService } from '@nglibs/meta';
 
 import { PostService, TagService } from '../shared';
 
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
         private route: ActivatedRoute,
         private tagService: TagService,
 
-        private readonly metadata: MetadataService
+        private readonly metadata: MetaService
     ) {}
 
     ngOnInit() {

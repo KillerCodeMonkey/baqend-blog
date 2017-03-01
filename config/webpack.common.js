@@ -1,8 +1,7 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var helpers = require('./helpers');
+var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+var helpers = require('./helpers')
 
 module.exports = {
   entry: {
@@ -12,7 +11,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.ts', '.js']
+    extensions: ['*', '.ts', '.js']
   },
 
   module: {
@@ -23,36 +22,36 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'html'
+        loader: 'html-loader'
       },
       {
         test: /index.html$/,
         loader: 'string-replace-loader',
         query: {
-            search: 'BASE_URL',
-            replace: process.env.NODE_ENV == 'gh-pages' ? '/baqend-blog/' : '/'
+          search: 'BASE_URL',
+          replace: process.env.NODE_ENV === 'gh-pages' ? '/baqend-blog/' : '/'
         }
       },
       {
         test: /\.(png|jpe?g|gif|svg|ico)$/,
-        loader: 'file?name=assets/images/[name].[hash].[ext]'
+        loader: 'file-loader?name=assets/images/[name].[hash].[ext]'
       },
       {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
-        loader: 'raw'
+        loader: 'raw-loader'
       },
       {
         test: /\.scss$/,
         include: helpers.root('src', 'app'),
-        loaders: ['raw', 'sass']
+        loaders: ['raw-loader', 'sass-loader']
       },
       {
         test: /\.woff(2)?(\?[a-z0-9#]+)?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
       }, {
         test: /\.(ttf|eot|svg)(\?[a-z0-9#]+)?$/,
-        loader: 'file'
+        loader: 'file-loader'
       }
     ]
   },
@@ -68,4 +67,4 @@ module.exports = {
 
     new CopyWebpackPlugin([ { from: 'assets', to: 'assets' } ])
   ]
-};
+}

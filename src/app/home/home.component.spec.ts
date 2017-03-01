@@ -8,7 +8,7 @@ import { model, db } from 'baqend';
 import { HomeComponent } from './home.component';
 import { PostService, TagService } from '../shared';
 
-import { MetadataService, MetadataModule } from '@nglibs/metadata';
+import { MetaService, MetaModule } from '@nglibs/meta';
 
 class PostServiceStub {
     getAll(): Promise<model.Post[]> {
@@ -50,7 +50,7 @@ describe('Home', () => {
             }],
             imports: [
                 RouterTestingModule,
-                MetadataModule.forRoot()
+                MetaModule.forRoot()
             ]
         });
     });
@@ -76,7 +76,7 @@ describe('Home', () => {
         expect(fixture.nativeElement.querySelectorAll('h3').length).toBe(2);
     }));
 
-    it('should set meta title and description content', fakeAsync(inject([MetadataService], (metadata: MetadataService) => {
+    it('should set meta title and description content', fakeAsync(inject([MetaService], (metadata: MetaService) => {
         let fixture = TestBed.createComponent(HomeComponent);
         spyOn(metadata, 'setTitle');
         spyOn(metadata, 'setTag');

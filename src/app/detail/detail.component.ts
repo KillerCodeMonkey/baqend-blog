@@ -4,14 +4,17 @@ import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { db, model } from 'baqend';
-import { MetadataService } from '@nglibs/metadata';
+import { MetaService } from '@nglibs/meta';
 
 import { CommentData, CommentService, PostService } from '../shared';
+
+export interface PreviewImage {
+    url: string;
+}
 
 @Component({
     templateUrl: './detail.component.html'
 })
-
 export class DetailComponent implements OnInit {
     post: model.Post;
     notFound: boolean = false;
@@ -31,7 +34,7 @@ export class DetailComponent implements OnInit {
         private location: Location,
         private sanitizer: DomSanitizer,
         private fb: FormBuilder,
-        private readonly metadata: MetadataService
+        private readonly metadata: MetaService
     ) {
         this.form = this.fb.group({
             text: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
@@ -62,7 +65,6 @@ export class DetailComponent implements OnInit {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-
     ngOnInit() {
         this.route.params
             .switchMap((params: Params) => this.postService.get(params['slug']))
@@ -72,11 +74,11 @@ export class DetailComponent implements OnInit {
 
                 this.metadata.setTitle(`${this.post.title}`);
                 this.metadata.setTag('og:description', this.post.description);
-                if (this.post.preview_image) {
-                    this.metadata.setTag('og:image', this.post.preview_image['url']);
-                } else {
-                    this.metadata.setTag('og:image', null);
-                }
+
+                const image = this.post.preview_image as PreviewImage;
+                const url = image.url || null;
+
+                this.metadata.setTag('og:image', url);
             }, () => this.notFound = true);
     }
 
@@ -95,7 +97,6 @@ export class DetailComponent implements OnInit {
     }
 
     back() {
-        console.log('baaaaack');
         this.location.back();
     }
 }
