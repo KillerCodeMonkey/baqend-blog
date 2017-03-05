@@ -29,7 +29,7 @@ $header-height: 50px;
 $footer-height: 235px;
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
-@import "public/style";
+@import "assets/style";
 
 body {
     background-color: $dark;
@@ -39,7 +39,7 @@ body {
 
 a {
     cursor: pointer;
-    
+
     &:hover {
         text-decoration: none;
     }
@@ -86,7 +86,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .main-container {
-    padding-top: 65px;    
+    padding-top: 65px;
     padding-bottom: $padding-base-horizontal;
 }
 
@@ -149,7 +149,7 @@ footer {
 
 /* icons */
 .icon-spacing-right {
-    margin-right: 3px; 
+    margin-right: 3px;
 }
 
 /* images */

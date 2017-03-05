@@ -11,8 +11,23 @@ import { DetailComponent } from './detail/detail.component';
 import { CommentService, PostService, TagService, DB_PROVIDERS, DBService, InstagramService } from './shared';
 
 import { AppRouter } from './app.router';
+import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@nglibs/meta';
 
 import { db } from 'baqend';
+
+function metadataFactory() {
+  return new MetaStaticLoader({
+    pageTitlePositioning: PageTitlePositioning.PrependPageTitle,
+    pageTitleSeparator: ' - ',
+    applicationName: 'Blog | Maschenmanufaktur',
+    defaults: {
+      title: 'Blog | Maschenmanufaktur',
+      description: 'Ein Blog mit Tutorials und Artikel rund um die Masche - zum Häkeln und Stricken.',
+      'og:type': 'blog',
+      'og:locale': 'de_DE'
+    }
+  });
+}
 
 @NgModule({
     imports: [
@@ -20,7 +35,11 @@ import { db } from 'baqend';
         JsonpModule,
         ReactiveFormsModule,
 
-        AppRouter
+        AppRouter,
+        MetaModule.forRoot({
+            provide: MetaLoader,
+            useFactory: (metadataFactory)
+        })
     ],
     providers: [
         CommentService,

@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack.test');
+var webpackConfig = require('./webpack.test')
 
 module.exports = function (config) {
   var _config = {
@@ -31,7 +31,7 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: ['PhantomJS'],
     singleRun: true
-  };
+  }
 
-  config.set(_config);
-};
+  config.set(_config)
+}
