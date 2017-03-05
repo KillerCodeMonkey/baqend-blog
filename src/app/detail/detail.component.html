@@ -11,7 +11,7 @@
 
   <div class="post-text" [innerHTML]="sanitize(post.text)"></div>
 
-  <button class="btn btn-primary" (click)="back()">Zurück zur Übersicht</button>
+  <button class="btn btn-primary btn-back" (click)="back()">Zurück zur Übersicht</button>
   
   <hr *ngIf="post.comments.size > 0">
 

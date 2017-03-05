@@ -15,6 +15,9 @@ $btn-border-radius-base: 0;
 
 $screen-lg: 9999px;
 
+$container-desktop: 860px;
+
+
 $hr-border: #ccc;
 
 
@@ -40,6 +43,10 @@ a {
     &:hover {
         text-decoration: none;
     }
+}
+
+.alert {
+    margin-top: 5px;
 }
 
 /* typo */
@@ -134,6 +141,10 @@ footer {
     color: $light;
     background-color: $btn-primary-color;
     border: 2px solid $btn-primary-color;
+}
+
+.btn-back {
+    margin-top: $padding-base-vertical * 2;
 }
 
 /* icons */
