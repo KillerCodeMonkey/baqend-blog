@@ -56,7 +56,7 @@ describe('Home', () => {
                 RouterTestingModule,
                 MetaModule.forRoot()
             ]
-        });
+        }).compileComponents();
     });
     it ('should work', () => {
         let fixture = TestBed.createComponent(HomeComponent);
@@ -64,16 +64,10 @@ describe('Home', () => {
         expect(fixture.componentInstance instanceof HomeComponent).toBe(true, 'should create HomeComponent');
     });
 
-    it('should render content', fakeAsync(() => {
         let fixture = TestBed.createComponent(HomeComponent);
 
         // ngOnInit
         fixture.detectChanges();
-        tick();
-
-        // getAll
-        fixture.detectChanges();
-        tick();
 
         expect(fixture.componentInstance.posts).toBeDefined();
         expect(fixture.componentInstance.posts.length).toBe(2);

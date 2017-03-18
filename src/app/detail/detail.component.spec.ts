@@ -96,7 +96,7 @@ describe('Detail', () => {
                 RouterTestingModule,
                 MetaModule.forRoot()
             ]
-        });
+        }).compileComponents();
     });
     it ('should work', () => {
         let fixture = TestBed.createComponent(DetailComponent);

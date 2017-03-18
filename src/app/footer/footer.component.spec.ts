@@ -16,7 +16,7 @@ const tags = [{
     id: '123',
     name: 'Test',
     alias: 'test'
-}]
+}] as model.Tag[]
 
 class TagServiceStub {
     getAll(): Promise<model.Tag[]> {
