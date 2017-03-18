@@ -63,15 +63,18 @@ describe('Home', () => {
 
         expect(fixture.componentInstance instanceof HomeComponent).toBe(true, 'should create HomeComponent');
     });
-
+    it('should render content', async(() => {
         let fixture = TestBed.createComponent(HomeComponent);
 
         // ngOnInit
         fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges(); // update view with
 
-        expect(fixture.componentInstance.posts).toBeDefined();
-        expect(fixture.componentInstance.posts.length).toBe(2);
-        expect(fixture.nativeElement.querySelectorAll('h3').length).toBe(2);
+            expect(fixture.componentInstance.posts).toBeDefined();
+            expect(fixture.componentInstance.posts.length).toBe(2);
+            expect(fixture.nativeElement.querySelectorAll('h3').length).toBe(2);
+        });
     }));
 
     it('should set meta title and description content', fakeAsync(inject([MetaService], (metadata: MetaService) => {

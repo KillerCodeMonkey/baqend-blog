@@ -134,25 +134,24 @@ describe('Detail', () => {
         });
     })));
 
-    it('should redirect to home on click', fakeAsync(inject([Router, Location], (router: Router, location: Location) => {
+    it('should redirect to home on click', async(inject([Router, Location], (router: Router, location: Location) => {
         spyOn(location, 'back');
 
         let fixture = TestBed.createComponent(DetailComponent);
-        fixture.detectChanges();
-        tick();
 
         fixture.detectChanges();
-        tick();
-
-        fixture.nativeElement.querySelector('button.btn-primary').click();
-
-        fixture.detectChanges();
-        tick();
-
-        expect(location.back).toHaveBeenCalled();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('button.btn-primary').click();
+            fixture.detectChanges();
+            return fixture.whenStable()
+        }).then(() => {
+            fixture.detectChanges();
+            expect(location.back).toHaveBeenCalled();
+        });
     })));
 
-    it('createComment should create and add comment', fakeAsync(() => {
+    it('createComment should create and add comment', async(() => {
         let fixture = TestBed.createComponent(DetailComponent);
         fixture.componentInstance.post = post;
 
@@ -160,12 +159,13 @@ describe('Detail', () => {
 
         fixture.componentInstance.createComment(comment as CommentData);
         fixture.detectChanges();
-        tick();
-
-        expect(fixture.componentInstance.post.comments.size).toBe(1);
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.componentInstance.post.comments.size).toBe(1);
+        });
     }));
 
-    it('createComment should reset captcha', fakeAsync(() => {
+    it('createComment should reset captcha', async(() => {
         let fixture = TestBed.createComponent(DetailComponent);
         fixture.componentInstance.post = post;
         fixture.componentInstance.captcha = {
@@ -175,11 +175,12 @@ describe('Detail', () => {
 
         fixture.componentInstance.createComment(comment as CommentData);
         fixture.detectChanges();
-        tick();
-
-        expect(fixture.componentInstance.captcha).not.toEqual({
-            task: '123',
-            solution: 12
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.componentInstance.captcha).not.toEqual({
+                task: '123',
+                solution: 12
+            });
         });
     }));
 });
