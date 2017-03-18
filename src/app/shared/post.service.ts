@@ -32,7 +32,7 @@ export class PostService {
     get(slug: string): Promise<model.Post> {
         return db.Post.find()
             .equal('slug', slug)
-            .singleResult({depth: 1})
+            .singleResult()
             .then((post: model.Post) => {
                 if (!post) {
                     throw new Error('not_found');
@@ -57,7 +57,7 @@ export class PostService {
     private requestPosts(req: query.Filter<model.Post>): Promise<model.Post[]> {
         return req.descending('date')
             .limit(30)
-            .resultList({depth: 1})
+            .resultList()
             .then((posts: model.Post[]) => {
                 posts.forEach((post) => {
                     post.text = this.converter.makeHtml(post.text);

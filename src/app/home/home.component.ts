@@ -32,6 +32,12 @@ export class HomeComponent implements OnInit {
 
                 return this.postService.getAll(tag ? tag.alias : null)
             })
-            .subscribe((posts: model.Post[]) => this.posts = posts);
+            .subscribe((posts: model.Post[]) => {
+                posts.forEach((post) => {
+                    post.tags = new Set(this.tagService
+                        .getForPost(post))
+                })
+                this.posts = posts;
+            });
     }
 }

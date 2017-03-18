@@ -15,4 +15,11 @@ export class CommentService {
 
         return comment.save({refresh: true});
     }
+
+    getForPost(post: model.Post): Promise<model.Comment[]> {
+        return db.Comment
+            .find()
+            .in('id', Array.from(post.comments || new Set()))
+            .resultList()
+    }
 }

@@ -66,4 +66,12 @@ describe('TagService', () => {
                 expect(db.Tag.find).not.toHaveBeenCalled();
             });
     })));
+
+    it('getForPost - should get tags for post', inject([TagService], (service: TagService) => {
+        service
+            .getAll()
+            .then((tags) => {
+                expect(service.getForPost({tags: new Set(defaultTags)} as model.Post)).toEqual(tags);
+            });
+    }));
 });

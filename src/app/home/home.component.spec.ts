@@ -33,6 +33,10 @@ class TagServiceStub {
     getByAlias(alias: string): Promise<model.Tag> {
         return Promise.resolve(tag);
     }
+
+    getForPost(post: model.Post): model.Tag[] {
+        return [tag] as model.Tag[];
+    }
 }
 
 describe('Home', () => {

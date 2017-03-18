@@ -23,6 +23,21 @@ export class TagService {
             });
     }
 
+    getForPost(post: model.Post): model.Tag[] {
+        let tags: model.Tag[] = [];
+        if (!post.tags) {
+            post.tags = new Set();
+        }
+
+        this.tags.forEach((tag) => {
+            if (post.tags.has(tag)) {
+                tags.push(tag);
+            }
+        });
+
+        return tags;
+    }
+
     getByAlias(alias: string): Promise<model.Tag> {
         let task: Promise<model.Tag[]>[] = [];
 

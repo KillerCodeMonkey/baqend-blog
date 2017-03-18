@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { db, model } from 'baqend';
 import { MetaService } from '@nglibs/meta';
 
-import { CommentData, CommentService, PostService } from '../shared';
+import { CommentData, CommentService, PostService, TagService } from '../shared';
 
 export interface PreviewImage {
     url: string;
@@ -17,6 +17,8 @@ export interface PreviewImage {
 })
 export class DetailComponent implements OnInit {
     post: model.Post;
+    comments: model.Comment[] = [];
+    tags: model.Tag[] = [];
     notFound: boolean = false;
     commentSaved = false;
     private operators = ['+', '-', '*']
@@ -30,6 +32,7 @@ export class DetailComponent implements OnInit {
     constructor(
         private commentService: CommentService,
         private postService: PostService,
+        private tagService: TagService,
         private route: ActivatedRoute,
         private location: Location,
         private sanitizer: DomSanitizer,
@@ -68,9 +71,16 @@ export class DetailComponent implements OnInit {
     ngOnInit() {
         this.route.params
             .switchMap((params: Params) => this.postService.get(params['slug']))
-            .subscribe((post: model.Post) => {
+            .switchMap((post: model.Post) => {
                 this.notFound = false;
                 this.post = post;
+                return this.commentService.getForPost(post)
+            })
+            .subscribe((comments: model.Comment[]) => {
+                this.notFound = false;
+                this.comments = comments;
+
+                this.tags = this.tagService.getForPost(this.post);
 
                 this.metadata.setTitle(`${this.post.title}`);
                 this.metadata.setTag('og:description', this.post.description);
@@ -93,6 +103,8 @@ export class DetailComponent implements OnInit {
         this.commentService.create(data).then(comment => {
             this.commentSaved = true;
             this.postService.addComment(this.post, comment);
+
+            this.comments.push(comment);
         });
     }
 

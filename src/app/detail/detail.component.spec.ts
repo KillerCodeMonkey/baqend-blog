@@ -12,7 +12,7 @@ import { db, model } from 'baqend';
 import { MetaService, MetaModule } from '@nglibs/meta';
 
 import { DetailComponent, PreviewImage } from './detail.component';
-import { CommentService, CommentData, PostService } from '../shared';
+import { CommentService, CommentData, PostService, TagService } from '../shared';
 
 let post = {
     title: 'Test',
@@ -40,9 +40,19 @@ class PostServiceStub {
     }
 }
 
+class TagServiceStub {
+    getForPost(post: model.Post): model.Tag[] {
+        return [];
+    }
+}
+
 class CommentServiceStub {
     create(comment: CommentData): Promise<model.Comment> {
         return Promise.resolve(comment);
+    }
+
+    getForPost(post: model.Post): Promise<model.Comment[]> {
+        return Promise.resolve([]);
     }
 }
 
@@ -73,6 +83,9 @@ describe('Detail', () => {
             }, {
                 provide: PostService,
                 useClass: PostServiceStub
+            }, {
+                provide: TagService,
+                useClass: TagServiceStub
             }, {
                 provide: ActivatedRoute,
                 useValue: { params: Observable.of({'slug': 'test'}) }

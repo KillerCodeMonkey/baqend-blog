@@ -4,7 +4,7 @@
       <div class="post-date">{{post.createdAt | date:'d. MMMM y'}} | </div>
       <div class="post-tags">
           <i class="icon-spacing-right icon-tags"></i>
-          <a *ngFor="let tag of post.tags" [routerLink]="['/kategorie', tag.alias]">{{tag.name}}</a>
+          <a *ngFor="let tag of tags" [routerLink]="['/kategorie', tag.alias]">{{tag.name}}</a>
       </div>
   </div>
   <br>
@@ -12,11 +12,11 @@
   <div class="post-text" [innerHTML]="sanitize(post.text)"></div>
 
   <button class="btn btn-primary btn-back" (click)="back()">Zurück zur Übersicht</button>
-  
-  <hr *ngIf="post.comments.size > 0">
 
-  <h3 *ngIf="post.comments.size > 0">{{post.comments.size}} Kommentar(e)</h3>
-  <div class="user-comment" *ngFor="let comment of post.comments">
+  <hr *ngIf="comments.length > 0">
+
+  <h3 *ngIf="comments.length > 0">{{comments.length}} Kommentar(e)</h3>
+  <div class="user-comment" *ngFor="let comment of comments">
     <div class="user-comment-title">
       <span class="heading-small">{{comment.name}}</span> | <span class="post-date">{{comment.createdAt | date:'d. MMMM y'}}</span>
     </div>
