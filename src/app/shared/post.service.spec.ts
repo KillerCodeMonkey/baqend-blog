@@ -11,7 +11,7 @@ let defaultPosts = [{
 }] as model.Post[];
 
 class TagStub {
-    getByAlias(): Promise<model.Tag> {
+    getByAlias(alias: string): Promise<model.Tag> {
         return Promise.resolve({
             id: '1',
             alias: 'cat1',
@@ -21,32 +21,28 @@ class TagStub {
 }
 
 const operations = {
-    descending: (field: string) => {
+    le: (field: string, value: any) => {
         return {
-            limit: (count: number) => {
+            in: (field: string, value: any) => {
+                return {
+                    descending: (field: string) => {
+                        return {
+                            resultList: () => Promise.resolve(defaultPosts)
+                        }
+                    }
+                }
+            },
+            descending: (field: string) => {
                 return {
                     resultList: () => Promise.resolve(defaultPosts)
-                };
+                }
             }
-        }
+        };
     },
     equal: (field: string, value: any) => {
         return {
             singleResult: () => Promise.resolve(defaultPosts[0])
         };
-    },
-    in: (field: string, value: any) => {
-        return {
-            descending: (field: string) => {
-                return {
-                    limit: (count: number) => {
-                        return {
-                            resultList: () => Promise.resolve(defaultPosts)
-                        };
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -104,7 +100,7 @@ describe('PostService', () => {
         })));
     });
 
-    describe('getAll', () => {
+    describe('get', () => {
         it('get - should get a single post without tag', async(inject([PostService], (service: PostService) => {
 
             service
@@ -123,31 +119,6 @@ describe('PostService', () => {
             service.get('test')
                 .then(post => expect(true).toBe(false))
                 .catch(e => expect(e.message).toBe('not_found'));
-        })));
-    });
-
-    describe('addComment', () => {
-        it('should add comment', async(inject([PostService], (service: PostService) => {
-            let post = new db.Post({
-                comments: new Set<model.Post>(),
-                title: 'huhu',
-                text: '1234'
-            });
-
-            let comment = new db.Comment({
-               text: 'test',
-                name: 'olaf',
-                email: 'olda@test.local'
-            });
-
-            spyOn(post.comments, 'add').and.callThrough();
-            spyOn(post, 'save');
-
-            service
-                .addComment(post, comment);
-
-            expect(post.comments.add).toHaveBeenCalledWith(comment);
-            expect(post.save).toHaveBeenCalled();
         })));
     });
 });

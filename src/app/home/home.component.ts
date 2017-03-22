@@ -3,7 +3,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Params } from '@angular/router'
 import { db, model } from 'baqend';
 import { MetaService } from '@nglibs/meta';
 
-import { PostService, TagService } from '../shared';
+import { PostService, TagService, CommentService } from '../shared';
 
 @Component({
     templateUrl: './home.component.html'
@@ -34,8 +34,7 @@ export class HomeComponent implements OnInit {
             })
             .subscribe((posts: model.Post[]) => {
                 posts.forEach((post) => {
-                    post.tags = new Set(this.tagService
-                        .getForPost(post))
+                    post.tags = new Set(this.tagService.getForPost(post));
                 })
                 this.posts = posts;
             });

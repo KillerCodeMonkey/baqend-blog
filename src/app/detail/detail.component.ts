@@ -100,11 +100,9 @@ export class DetailComponent implements OnInit {
         this.form.reset();
         this.captcha = this.generateCaptcha();
 
-        this.commentService.create(data).then(comment => {
-            this.commentSaved = true;
-            this.postService.addComment(this.post, comment);
-
+        this.commentService.create(data, this.post).then(comment => {
             this.comments.push(comment);
+            this.commentSaved = true;
         });
     }
 

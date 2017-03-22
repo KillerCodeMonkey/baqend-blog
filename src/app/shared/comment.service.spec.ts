@@ -56,9 +56,9 @@ describe('CommentService', () => {
             } as CommentData;
 
             service
-                .create(newComment)
+                .create(newComment, {id: '23'} as model.Post)
                 .then(comment => {
-                    expect(comment as Object).toEqual(new CommentStub(newComment));
+                    expect(comment as Object).toEqual(Object.assign(new CommentStub(newComment), { post: {id: '23'} }));
                 })
         })));
     });

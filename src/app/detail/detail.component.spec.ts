@@ -15,6 +15,7 @@ import { DetailComponent, PreviewImage } from './detail.component';
 import { CommentService, CommentData, PostService, TagService } from '../shared';
 
 let post = {
+    id: '234',
     title: 'Test',
     text: 'Test',
     description: '1233',
@@ -34,10 +35,6 @@ class PostServiceStub {
     get(slug: string): Promise<model.Post> {
         return Promise.resolve(post);
     }
-    addComment(post: model.Post, comment: model.Comment) {
-        post.comments.add(comment);
-        return Promise.resolve(post);
-    }
 }
 
 class TagServiceStub {
@@ -47,7 +44,7 @@ class TagServiceStub {
 }
 
 class CommentServiceStub {
-    create(comment: CommentData): Promise<model.Comment> {
+    create(comment: CommentData, post: model.Post): Promise<model.Comment> {
         return Promise.resolve(comment);
     }
 
@@ -154,15 +151,18 @@ describe('Detail', () => {
     it('createComment should create and add comment', async(() => {
         let fixture = TestBed.createComponent(DetailComponent);
         fixture.componentInstance.post = post;
+        fixture.detectChanges();
 
-        expect(fixture.componentInstance.post.comments.size).toBe(0);
+        expect(fixture.componentInstance.comments.length).toBe(0);
+        expect(fixture.componentInstance.commentSaved).toBe(false);
 
         fixture.componentInstance.createComment(comment as CommentData);
         fixture.detectChanges();
+
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.componentInstance.post.comments.size).toBe(1);
-        });
+            expect(fixture.componentInstance.commentSaved).toBe(true);
+        })
     }));
 
     it('createComment should reset captcha', async(() => {

@@ -16,58 +16,36 @@ export class PostService {
     ) {}
 
     getAll(tagAlias?: string): Promise<model.Post[]> {
-        let req = db.Post.find();
+        const postQuery = db.Post.find().le('publishedAt', new Date(Date.now()))
+        let postPromise = postQuery.descending('date').resultList();
 
         if (tagAlias) {
-            return this.tagService
+            postPromise = this.tagService
                 .getByAlias(tagAlias)
-                .then((tag: model.Tag) => {
-                    return this.requestPosts(req.in('tags', tag.id));
-                 });
+                .then((tag) => {
+                    return postQuery.in('tags', tag.id).descending('date').resultList();
+                });
         }
 
-        return this.requestPosts(req);
+        return postPromise.then((posts: model.Post[]) => {
+            posts.forEach((post) => {
+                post.text = this.converter.makeHtml(post.text);
+            });
+
+            return posts;
+        });
     }
 
     get(slug: string): Promise<model.Post> {
-        return db.Post.find()
-            .equal('slug', slug)
-            .singleResult()
+        return db.Post.find().equal('slug', slug).singleResult()
             .then((post: model.Post) => {
                 if (!post) {
                     throw new Error('not_found');
                 }
 
-                if (!post.comments) {
-                    post.comments = new Set<model.Comment>([]);
-                }
-
                 post.text = this.converter.makeHtml(post.text);
 
                 return post;
-            });
-    }
-
-    addComment(post: model.Post, comment: model.Comment): Promise<model.Post> {
-        post.comments.add(comment);
-
-        return post.save({refresh: true});
-    }
-
-    private requestPosts(req: query.Filter<model.Post>): Promise<model.Post[]> {
-        return req.descending('date')
-            .limit(30)
-            .resultList()
-            .then((posts: model.Post[]) => {
-                posts.forEach((post) => {
-                    post.text = this.converter.makeHtml(post.text);
-
-                    if (!post.comments) {
-                        post.comments = new Set<model.Comment>([]);
-                    }
-                });
-
-                return posts;
             });
     }
 }
