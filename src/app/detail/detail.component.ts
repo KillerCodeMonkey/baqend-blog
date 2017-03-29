@@ -86,7 +86,7 @@ export class DetailComponent implements OnInit {
                 this.metadata.setTag('og:description', this.post.description);
 
                 const image = this.post.preview_image as PreviewImage;
-                const url = image.url || null;
+                const url = image ? image.url : null;
 
                 this.metadata.setTag('og:image', url);
             }, () => this.notFound = true);
